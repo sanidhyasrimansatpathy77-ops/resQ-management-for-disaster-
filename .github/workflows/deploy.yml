@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -32,8 +32,7 @@ jobs:
 
       - name: Install Backend Dependencies
         run: |
-          python -m pip install
-{--upgrade} pip
+          python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Test Backend Health & Syntax
@@ -49,11 +48,12 @@ jobs:
 
       - name: Install Frontend Dependencies
         working-directory: frontend
-        run: npm ci
+        run: npm install
 
       - name: Build Frontend Application
-        workflow-directory: frontend
+        working-directory: frontend
         run: npm run build
+
 
       - name: Setup GitHub Pages
         if: github.ref == 'refs/heads/main'
